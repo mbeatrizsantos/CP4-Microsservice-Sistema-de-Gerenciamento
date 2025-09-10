@@ -1,6 +1,7 @@
 Projeto em C# que implementa gerenciamento de sessões de usuário utilizando MySQL como banco de dados e Redis como cache.
 
 ////////////////////////////////////////////////////////////////////////////////
+
 Estrutura de Classes:
 public class Users
 {
@@ -10,11 +11,13 @@ public class Users
     public DateTime UltimoAcesso { get; set; }
 }
 ////////////////////////////////////////////////////////////////////////////////
+
 Conexão com MySQL e Redis:
 var redis = await ConnectionMultiplexer.ConnectAsync("localhost:6379");
 using var connection = new MySqlConnection("Server=localhost;database=fiap;User=root;Password=123");
 
 ////////////////////////////////////////////////////////////////////////////////
+
 Lógica de Cache:
 
 string key = "get-users";
@@ -32,6 +35,7 @@ var users = (await connection.QueryAsync<Users>(sql)).ToList();
 await db.StringSetAsync(key, JsonConvert.SerializeObject(users), TimeSpan.FromMinutes(15));
 
 ////////////////////////////////////////////////////////////////////////////////
+
 Tratamento de Exceções:
 catch (Exception ex)
 {
